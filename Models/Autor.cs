@@ -18,6 +18,7 @@ namespace AppLibros.Models
 
         [DisplayName("Apellido")]
         public string apellido { get; set; }
+        [DisplayName("Libros")]
         public List<Libro> libros { get; set; }
 
         //public Autor(int id, string nombre, string apellido)
@@ -28,9 +29,9 @@ namespace AppLibros.Models
         //    libros = new List<Libro>();
         //}
 
-        public void agregarLibro(Libro libro)
-        {
-            libros.Add(libro);
-        }
+        //public void agregarLibro(Libro libro)
+        //{
+        //    libros.Add(libro);
+        //}
     }
 }

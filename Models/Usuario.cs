@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,7 @@ namespace AppLibros.Models
         public string username { get; set; }
         [Required]
         [PasswordPropertyText]
+        [HiddenInput]
         [MinLength(8)]
         [DisplayName("Contraseña")]
         public string password { get; set; }
@@ -46,16 +48,6 @@ namespace AppLibros.Models
         //    resenasFavoritas = new List<Resena>();
         //    librosFavoritos = new List<Libro>();
         //    autoresFavoritos = new List<Autor>();
-        //}
-
-        //public void agregarLibroFavorito(Libro libro)
-        //{
-        //    librosFavoritos.Add(libro);
-        //}
-
-        //public void agregarAutorFavorito(Autor autor)
-        //{
-        //    autoresFavoritos.Add(autor);
-        //}
+        //
     }
 }
