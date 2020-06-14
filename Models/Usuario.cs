@@ -17,14 +17,16 @@ namespace AppLibros.Models
         public string nombre { get; set; }
         [Required]
         public string apellido { get; set; }
-        [Range(1, 99)]
+        [Range(12, 99)]
         public int edad { get; set; }
         [Required]
-        [MinLength(8)]
+        [EmailAddress]
+        [DisplayName("Nombre de usuario")]
         public string username { get; set; }
         [Required]
         [PasswordPropertyText]
         [MinLength(8)]
+        [DisplayName("Contraseña")]
         public string password { get; set; }
         [DisplayName("Reseñas Favoritas")]
         public List<Libro> librosFavoritos { get; set; }
@@ -46,14 +48,14 @@ namespace AppLibros.Models
         //    autoresFavoritos = new List<Autor>();
         //}
 
-        public void agregarLibroFavorito(Libro libro)
-        {
-            librosFavoritos.Add(libro);
-        }
+        //public void agregarLibroFavorito(Libro libro)
+        //{
+        //    librosFavoritos.Add(libro);
+        //}
 
-        public void agregarAutorFavorito(Autor autor)
-        {
-            autoresFavoritos.Add(autor);
-        }
+        //public void agregarAutorFavorito(Autor autor)
+        //{
+        //    autoresFavoritos.Add(autor);
+        //}
     }
 }

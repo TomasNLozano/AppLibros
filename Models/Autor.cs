@@ -18,7 +18,7 @@ namespace AppLibros.Models
 
         [DisplayName("Apellido")]
         public string apellido { get; set; }
-        public virtual List<Libro> libros { get; set; }
+        public List<Libro> libros { get; set; }
 
         //public Autor(int id, string nombre, string apellido)
         //{

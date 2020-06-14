@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,11 +13,16 @@ namespace AppLibros.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
+        [DisplayName("Título")]
         public string titulo { get; set; }
+        [DisplayName("ISBN")]
         public string isbn { get; set; }
+        [DisplayName("Autor")]
         public Autor autor { get; set; }
+        [DisplayName("Reseña")]
         public string resena { get; set; }
         public double puntaje { get; set; }
+        [DisplayName("Votos")]
         public int votos { get; set; }
        
     }
