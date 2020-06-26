@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppLibros.Migrations
 {
     [DbContext(typeof(LibrosDataBaseContext))]
-    [Migration("20200614194945_AppLibros.Context.LibroDataBaseContext")]
-    partial class AppLibrosContextLibroDataBaseContext
+    [Migration("20200626004646_AppLibros.Context.LibrosDataBaseContext")]
+    partial class AppLibrosContextLibrosDataBaseContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,24 @@ namespace AppLibros.Migrations
                     b.HasIndex("Usuarioid");
 
                     b.ToTable("autores");
+                });
+
+            modelBuilder.Entity("AppLibros.Models.AutoresFavoritos", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("idAutor")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("autoresFavoritos");
                 });
 
             modelBuilder.Entity("AppLibros.Models.Libro", b =>
@@ -79,6 +97,24 @@ namespace AppLibros.Migrations
                     b.HasIndex("autorid");
 
                     b.ToTable("libros");
+                });
+
+            modelBuilder.Entity("AppLibros.Models.LibrosFavoritos", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("idLibro")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("librosFavoritos");
                 });
 
             modelBuilder.Entity("AppLibros.Models.Usuario", b =>

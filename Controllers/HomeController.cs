@@ -6,32 +6,31 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AppLibros.Models;
-using AppLibros.Context;
 using System.Diagnostics.Eventing.Reader;
-
+using Microsoft.AspNetCore.Http;
+using AppLibros.Context;
 
 namespace AppLibros.Controllers
 {
 
     public class HomeController : Controller
     {
-       
+
 
         private readonly LibrosDataBaseContext _context;
-
-        public HomeController(LibrosDataBaseContext context)
-        {
-            _context = context;
-        }
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, LibrosDataBaseContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
+
+            HttpContext.Session.SetString("userId", "");
+
             return View();
         }
 
@@ -46,14 +45,16 @@ namespace AppLibros.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //public IActionResult LogIn(String user, String pass)
-        //{
-        //    Usuario usuario = _context.usuarios.First(u => (u.username == user && u.password == pass));
-        //    //Session["UsId"] = usuario.id;
+        [HttpPost]
+        public IActionResult LogIn(String id, String id2)
+        {
+            Usuario usuario = _context.usuarios.FirstOrDefault(u => (u.username == id && u.password == id2));
+            HttpContext.Session.SetString("username", id.ToString());
+            HttpContext.Session.SetString("id", usuario.id.ToString());
+            HttpContext.Session.SetString("esAdmin", usuario.esAdmin.ToString());
 
-
-        //    return RedirectToAction("Details", "UsuarioController", usuario.id);
-        //}
+            return RedirectToAction(nameof(UsuarioController.Details), nameof(UsuarioController), usuario.id);
+        }
 
     }
 }

@@ -16,6 +16,8 @@ namespace AppLibros.Context
         public DbSet<Autor> autores { get; set; }
         public DbSet<Libro> libros { get; set; }
         public DbSet<Usuario> usuarios { get; set; }
-
+        public DbSet<LibrosFavoritos> librosFavoritos { get; set; }
+        public DbSet<AutoresFavoritos> autoresFavoritos { get; set; }
+        //Agregar DBset de librosXAutor y volver a hacer toda la puta base de la reconcha de tu vieja miriam y chrischu pasion. P.S. El gordo salchi se nos caga de risa en la jeta mientras nosotros intentamos remas un yate en dulce de leche repostero hecho con leche de pinguino
     }
 }

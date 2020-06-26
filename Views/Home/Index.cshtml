@@ -5,12 +5,32 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <form asp-action="logIn">
+    
+  @using (Html.BeginForm())
+  {
+      <h4>Login</h4>
+      <div>
+          <label for="usuario">Nombre de Usuario</label>
+          <p id="usuario">
+              @Html.TextBox("id")
+          </p>
+          <label for="clave">Contraseña</label>
+          <p id="clave">
+              @Html.Password("id2")
+          </p>
+          <input type="submit" value="Ingresar" class="btn-outline-dark form-control" />
+      </div>
+
+  }
+
+   
+    
+    @*<form asp-action="logIn">
         <label for="user">Usuario</label>
         <input id="user" type="text"/>
         <label for="pass">Contraseña</label>
         <input id="pass" type="password"/>
         <input type="submit" value="Log In"/>
-    </form>
+    </form>*@
 
 </div>

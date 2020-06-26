@@ -72,7 +72,7 @@ namespace AppLibros.Controllers
                 libro.puntaje = 0;
                 libro.votos = 0;
                 List<Libro> libros = new List<Libro>();
-                libros = _context.autores.FindAsync(libro.autor.id).Result.libros;
+                libros = _context.
                 libros.Add(libro);
                 _context.Add(libro);
                 await _context.SaveChangesAsync();

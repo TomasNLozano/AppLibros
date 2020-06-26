@@ -31,6 +31,8 @@ namespace AppLibros
                 options.UseSqlServer(Configuration["ConnectionString:ResenasDataBaseConnection"
             ]));
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,11 +55,18 @@ namespace AppLibros
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "login",
+                    pattern: "{controller=Home}/{action=LogIn}/{id?}/{id2?}"
+                    );
             });
         }
     }

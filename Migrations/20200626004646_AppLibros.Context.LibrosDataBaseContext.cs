@@ -2,10 +2,38 @@
 
 namespace AppLibros.Migrations
 {
-    public partial class AppLibrosContextLibroDataBaseContext : Migration
+    public partial class AppLibrosContextLibrosDataBaseContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "autoresFavoritos",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idUsuario = table.Column<int>(nullable: false),
+                    idAutor = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_autoresFavoritos", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "librosFavoritos",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idUsuario = table.Column<int>(nullable: false),
+                    idLibro = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_librosFavoritos", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "usuarios",
                 columns: table => new
@@ -95,7 +123,13 @@ namespace AppLibros.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "autoresFavoritos");
+
+            migrationBuilder.DropTable(
                 name: "libros");
+
+            migrationBuilder.DropTable(
+                name: "librosFavoritos");
 
             migrationBuilder.DropTable(
                 name: "autores");
