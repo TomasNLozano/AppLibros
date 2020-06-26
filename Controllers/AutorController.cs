@@ -26,7 +26,8 @@ namespace AppLibros.Controllers
             var autores = await _context.autores.ToListAsync();
             foreach (Autor autor in autores) 
             {
-                autor.libros = await _context.libros.Where(e => e.autor.id == autor.id).ToListAsync();
+                autor.libros = new List<Libro>();
+                autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
             } 
             return View(await _context.autores.ToListAsync());
         }
@@ -45,6 +46,9 @@ namespace AppLibros.Controllers
             {
                 return NotFound();
             }
+
+            autor.libros = new List<Libro>();
+            autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
 
             return View(autor);
         }
@@ -147,7 +151,7 @@ namespace AppLibros.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var autor = await _context.autores.FindAsync(id);
-            var libros = await _context.libros.Where(e => e.autor.id == id).ToListAsync();
+            var libros = await _context.libros.Where(e => e.autorid == id).ToListAsync();
             foreach(Libro libro in libros) 
             {
                 _context.libros.Remove(libro);

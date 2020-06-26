@@ -70,7 +70,7 @@ namespace AppLibros.Migrations
                     b.Property<int?>("Usuarioid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("autorid")
+                    b.Property<int>("autorid")
                         .HasColumnType("int");
 
                     b.Property<string>("isbn")
@@ -162,9 +162,11 @@ namespace AppLibros.Migrations
                         .WithMany("librosFavoritos")
                         .HasForeignKey("Usuarioid");
 
-                    b.HasOne("AppLibros.Models.Autor", "autor")
+                    b.HasOne("AppLibros.Models.Autor", null)
                         .WithMany("libros")
-                        .HasForeignKey("autorid");
+                        .HasForeignKey("autorid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

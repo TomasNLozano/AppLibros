@@ -2,7 +2,7 @@
 
 namespace AppLibros.Migrations
 {
-    public partial class AppLibrosContextLibrosDataBaseContext : Migration
+    public partial class AppLibrosContextLibroDataBaseContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,7 +81,7 @@ namespace AppLibros.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     titulo = table.Column<string>(nullable: true),
                     isbn = table.Column<string>(nullable: true),
-                    autorid = table.Column<int>(nullable: true),
+                    autorid = table.Column<int>(nullable: false),
                     resena = table.Column<string>(nullable: true),
                     puntaje = table.Column<double>(nullable: false),
                     votos = table.Column<int>(nullable: false),
@@ -101,7 +101,7 @@ namespace AppLibros.Migrations
                         column: x => x.autorid,
                         principalTable: "autores",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

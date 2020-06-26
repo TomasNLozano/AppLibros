@@ -49,11 +49,11 @@ namespace AppLibros.Controllers
         public IActionResult LogIn(String id, String id2)
         {
             Usuario usuario = _context.usuarios.FirstOrDefault(u => (u.username == id && u.password == id2));
-            HttpContext.Session.SetString("username", id.ToString());
-            HttpContext.Session.SetString("id", usuario.id.ToString());
+            HttpContext.Session.SetString("username", id);
+            HttpContext.Session.SetInt32("id", usuario.id);
             HttpContext.Session.SetString("esAdmin", usuario.esAdmin.ToString());
-
-            return RedirectToAction(nameof(UsuarioController.Details), nameof(UsuarioController), usuario.id);
+                      
+            return RedirectToAction(nameof(UsuarioController.Details), nameof(UsuarioController), usuario);
         }
 
     }

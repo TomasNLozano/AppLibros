@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppLibros.Migrations
 {
     [DbContext(typeof(LibrosDataBaseContext))]
-    [Migration("20200626004646_AppLibros.Context.LibrosDataBaseContext")]
-    partial class AppLibrosContextLibrosDataBaseContext
+    [Migration("20200626203106_AppLibros.Context.LibroDataBaseContext")]
+    partial class AppLibrosContextLibroDataBaseContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,7 +72,7 @@ namespace AppLibros.Migrations
                     b.Property<int?>("Usuarioid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("autorid")
+                    b.Property<int>("autorid")
                         .HasColumnType("int");
 
                     b.Property<string>("isbn")
@@ -164,9 +164,11 @@ namespace AppLibros.Migrations
                         .WithMany("librosFavoritos")
                         .HasForeignKey("Usuarioid");
 
-                    b.HasOne("AppLibros.Models.Autor", "autor")
+                    b.HasOne("AppLibros.Models.Autor", null)
                         .WithMany("libros")
-                        .HasForeignKey("autorid");
+                        .HasForeignKey("autorid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

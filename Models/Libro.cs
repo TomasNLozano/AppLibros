@@ -19,7 +19,7 @@ namespace AppLibros.Models
         [DisplayName("ISBN")]
         public string isbn { get; set; }
         [DisplayName("Autor")]
-        public Autor autor { get; set; }
+        public int autorid { get; set; }
         [DisplayName("Reseña")]
         public string resena { get; set; }
         public double puntaje { get; set; }

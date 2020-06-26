@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace AppLibros.Models
 {
-    public class LibrosFavoritos
+    public class LibrosAutor
     {
-
         [Key]
-        [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-        public int idUsuario { get; set; }
-
+        public int idAutor { get; set; }
         public int idLibro { get; set; }
 
-
+        public LibrosAutor(int autor, int libro)
+        {
+            idAutor = autor;
+            idLibro = libro;
+        }
     }
 }

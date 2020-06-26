@@ -23,9 +23,9 @@
                 <span asp-validation-for="isbn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="autor" class="control-label">Autor</label>
-                @Html.DropDownList("autor", new SelectList((List<Autor>)ViewBag.listaAutores, "id", "apellido"), "Autor")
-                <span asp-validation-for="autor" class="text-danger"></span>
+                <label asp-for="autorid" class="control-label">Autor</label>
+                @Html.DropDownList("autorid", new SelectList(@*(List<Autor>)*@ViewBag.listaAutores,"id", "apellido"), "Autor")
+                <span asp-validation-for="autorid" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="resena" class="control-label"></label>

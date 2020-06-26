@@ -56,7 +56,13 @@ namespace AppLibros.Controllers
         {
             List<Autor> lAutores = new List<Autor>();
             lAutores = _context.autores.ToList();
+            foreach (Autor autor in lAutores) 
+            {
+                autor.apellido = autor.nombre + " " + autor.apellido;
+            }
+            var listaautores = new SelectList(lAutores, "autor", "apellido");
             ViewBag.listaAutores = lAutores;
+            ViewBag.lista2 = listaautores;
             return View();
         }
 
@@ -71,10 +77,7 @@ namespace AppLibros.Controllers
             {
                 libro.puntaje = 0;
                 libro.votos = 0;
-                List<Libro> libros = new List<Libro>();
-                libros = _context.
-                libros.Add(libro);
-                _context.Add(libro);
+                _context.libros.Add(libro);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
