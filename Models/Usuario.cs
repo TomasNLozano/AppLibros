@@ -13,6 +13,7 @@ namespace AppLibros.Models
     {
         [Key]
         [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [ForeignKey("idUsuario")]
         public int id { get; set; }
         [Required]
         public string nombre { get; set; }

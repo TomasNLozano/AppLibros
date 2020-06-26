@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="autor" class="control-label">Autor</label>
-                @Html.DropDownList("autor", new SelectList(ViewBag.listaAutores, "id", "apellido"), "Autor")
+                @Html.DropDownList("autor", new SelectList((List<Autor>)ViewBag.listaAutores, "id", "apellido"), "Autor")
                 <span asp-validation-for="autor" class="text-danger"></span>
             </div>
             <div class="form-group">

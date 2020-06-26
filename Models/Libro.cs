@@ -12,6 +12,7 @@ namespace AppLibros.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [ForeignKey("idLibro")]
         public int id { get; set; }
         [DisplayName("Título")]
         public string titulo { get; set; }
