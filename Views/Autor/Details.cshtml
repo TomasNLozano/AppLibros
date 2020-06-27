@@ -29,7 +29,10 @@
     <br />
     @foreach (var item in Model.libros)
     {
-        @Html.ActionLink((item.titulo), "Details", "Libro",item.id)
+        var idLibro = new { id = item.id };
+
+
+        @Html.ActionLink((item.titulo), "Details", "Libro", idLibro.id)
         //Evaluar si se agrega la puntuacion de cada libro.
     }
 </div>

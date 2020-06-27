@@ -46,6 +46,7 @@ namespace AppLibros.Controllers
         }
 
         [HttpPost]
+        //nunca llega
         public IActionResult LogIn(String id, String id2)
         {
             Usuario usuario = _context.usuarios.FirstOrDefault(u => (u.username == id && u.password == id2));

@@ -71,7 +71,7 @@ namespace AppLibros.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,titulo,isbn,autor,resena")] Libro libro)
+        public async Task<IActionResult> Create([Bind("id,titulo,isbn,autorid,resena")] Libro libro)
         {
             if (ModelState.IsValid)
             {
