@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppLibros.Context;
 using AppLibros.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace AppLibros.Controllers
 {
@@ -49,6 +50,9 @@ namespace AppLibros.Controllers
 
             autor.libros = new List<Libro>();
             autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
+
+            bool esFav = buscarFavorito(autor.id);
+            ViewBag.esFav = !esFav;
 
             return View(autor);
         }
@@ -164,6 +168,11 @@ namespace AppLibros.Controllers
         private bool AutorExists(int id)
         {
             return _context.autores.Any(e => e.id == id);
+        }
+        private bool buscarFavorito(int id)
+        {
+            return _context.autoresFavoritos.All(e => e.idAutor == id && e.idUsuario == HttpContext.Session.GetInt32("id"));
+            
         }
     }
 }

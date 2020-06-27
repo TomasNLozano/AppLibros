@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppLibros.Context;
 using AppLibros.Models;
-using AspNetCore;
+using Microsoft.AspNetCore.Http;
+
 
 namespace AppLibros.Controllers
 {

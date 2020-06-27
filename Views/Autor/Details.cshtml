@@ -33,8 +33,23 @@
 
 
         @Html.ActionLink((item.titulo), "Details", "Libro", idLibro.id)
+        <br/>
         //Evaluar si se agrega la puntuacion de cada libro.
     }
+</div>
+<div>
+    @using (Html.BeginForm())
+    {
+    <div>
+        <label for="agregar">¿Es favorito?</label>
+        <p id="agregar">
+            @Html.CheckBox("Agregar",(bool)ViewBag.esFav)
+        </p>
+        <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="btn-outline-dark form-control" />
+    </div>
+    }
+
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |

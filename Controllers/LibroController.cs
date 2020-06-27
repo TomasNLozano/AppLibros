@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppLibros.Context;
 using AppLibros.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace AppLibros.Controllers
 {
@@ -47,6 +48,9 @@ namespace AppLibros.Controllers
                 promedio = libro.puntaje / libro.votos;
             }
             ViewBag.promedio = promedio;
+
+            bool esFav = buscarFavorito(libro.id);
+            ViewBag.esFav = !esFav;
 
             return View(libro);
         }
@@ -167,6 +171,22 @@ namespace AppLibros.Controllers
         private bool LibroExists(int id)
         {
             return _context.libros.Any(e => e.id == id);
+        }
+
+        private bool buscarFavorito(int id)
+        {
+            return _context.librosFavoritos.Any(e => e.idLibro == id && e.idUsuario == HttpContext.Session.GetInt32("id"));
+                
+        }
+        public async void agregarFavorito(int id)
+        {
+            //Task<IActionResult>
+            var libroFav = new LibrosFavoritos();
+            libroFav.idLibro = id;
+            libroFav.idUsuario = (int)HttpContext.Session.GetInt32("id");
+            await _context.librosFavoritos.AddAsync(libroFav);
+            await _context.SaveChangesAsync();
+
         }
     }
 }

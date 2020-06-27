@@ -29,6 +29,7 @@ namespace AppLibros.Models
         [PasswordPropertyText]
         [HiddenInput]
         [MinLength(8)]
+        [DataType(DataType.Password)]
         [DisplayName("Contraseña")]
         public string password { get; set; }
         [DisplayName("Reseñas Favoritas")]
