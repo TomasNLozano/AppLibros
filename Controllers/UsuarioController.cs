@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AppLibros.Context;
 using AppLibros.Models;
+using AspNetCore;
 
 namespace AppLibros.Controllers
 {
@@ -39,7 +40,8 @@ namespace AppLibros.Controllers
             {
                 return NotFound();
             }
-
+            usuario.librosFavoritos = new List<Libro>();
+            usuario.autoresFavoritos = new List<Autor>();
             return View(usuario);
         }
 
