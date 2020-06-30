@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AppLibros.Context;
 using AppLibros.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AppLibros.Controllers
 {
@@ -49,8 +50,10 @@ namespace AppLibros.Controllers
             }
             ViewBag.promedio = promedio;
 
-            bool esFav = buscarFavorito(libro.id);
-            ViewBag.esFav = !esFav;
+            LibrosFavoritos esFav = buscarFavorito(libro.id);
+            ViewBag.esFav = esFav;
+
+            ViewBag.idLibro = libro.id;
 
             return View(libro);
         }
@@ -173,12 +176,12 @@ namespace AppLibros.Controllers
             return _context.libros.Any(e => e.id == id);
         }
 
-        private bool buscarFavorito(int id)
+        private LibrosFavoritos buscarFavorito(int id)
         {
-            return _context.librosFavoritos.Any(e => e.idLibro == id && e.idUsuario == HttpContext.Session.GetInt32("id"));
-                
+            return _context.librosFavoritos.FirstOrDefault(e => e.idLibro == id);
+                          
         }
-        public async void agregarFavorito(int id)
+        public async Task<IActionResult> agregarFavorito(int id)
         {
             //Task<IActionResult>
             var libroFav = new LibrosFavoritos();
@@ -186,6 +189,19 @@ namespace AppLibros.Controllers
             libroFav.idUsuario = (int)HttpContext.Session.GetInt32("id");
             await _context.librosFavoritos.AddAsync(libroFav);
             await _context.SaveChangesAsync();
+            var idLibro = new { id = libroFav.idLibro };
+            return RedirectToAction("Details",idLibro);
+           
+        }
+        public async Task<IActionResult> quitarFavorito(int id)
+        {
+            //Task<IActionResult>
+            var libroFav = await _context.librosFavoritos.FirstOrDefaultAsync(t=> t.idLibro == id && t.idUsuario == HttpContext.Session.GetInt32("id"));
+
+            _context.librosFavoritos.Remove(libroFav);
+            await _context.SaveChangesAsync();
+            var idLibro = new { id = libroFav.idLibro };
+            return RedirectToAction("Details", idLibro);
 
         }
     }

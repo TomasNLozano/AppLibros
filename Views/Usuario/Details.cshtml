@@ -47,14 +47,16 @@
         @Html.DisplayNameFor(model => model.librosFavoritos)
         @foreach (var item in Model.librosFavoritos)
         {
-            @Html.ActionLink(item.titulo, "Details/" + item.id, "Libro")
+            var idLibro = new { id = item.id };
+            @Html.ActionLink(item.titulo, "Details","Libro", idLibro)
         }
     </div>
     <div>
         @Html.DisplayNameFor(model => model.autoresFavoritos)
         @foreach (var item in Model.autoresFavoritos)
         {
-            @Html.ActionLink((item.nombre + " " + item.apellido), "Details/" + item.id, "Autor")
+            var idAutor = new { id = item.id };
+            @Html.ActionLink(item.nombre, "Details", "Autor", idAutor)
         }
     </div>
 </div>

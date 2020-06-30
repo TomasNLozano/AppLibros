@@ -67,6 +67,14 @@ namespace AppLibros
                     name: "login",
                     pattern: "{controller=Home}/{action=LogIn}/{id?}/{id2?}"
                     );
+                endpoints.MapControllerRoute(
+                    name: "agregarLibroFav",
+                    pattern: "{controller=Libro}/{action=agregarFavorito}/{id}"
+                    );
+                endpoints.MapControllerRoute(
+                    name: "agregarAutorFav",
+                    pattern: "{controller=Autor}/{action=agregarFavorito}/{id}"
+                    );
             });
         }
     }

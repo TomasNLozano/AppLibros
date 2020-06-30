@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AppLibros.Context;
 using AppLibros.Models;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace AppLibros.Controllers
 {
@@ -41,8 +41,19 @@ namespace AppLibros.Controllers
             {
                 return NotFound();
             }
-            usuario.librosFavoritos = new List<Libro>();
-            usuario.autoresFavoritos = new List<Autor>();
+
+            var listaLibro = from Libro in _context.libros
+                            join LibrosFavoritos in _context.librosFavoritos on Libro.id equals LibrosFavoritos.idLibro
+                            where LibrosFavoritos.idUsuario == usuario.id
+                            select Libro;
+            usuario.librosFavoritos = listaLibro.ToList();
+            
+            var listaAutor = from Autor in _context.autores
+                             join AutoresFavoritos in _context.autoresFavoritos on Autor.id equals AutoresFavoritos.idAutor
+                             where AutoresFavoritos.idUsuario == usuario.id
+                             select Autor;
+            usuario.autoresFavoritos = listaAutor.ToList();
+
             return View(usuario);
         }
 
@@ -62,8 +73,6 @@ namespace AppLibros.Controllers
             if (ModelState.IsValid)
             {
                 usuario.esAdmin = false;
-                usuario.autoresFavoritos = new List<Autor>();
-                usuario.librosFavoritos = new List<Libro>();
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -157,26 +166,6 @@ namespace AppLibros.Controllers
             return _context.usuarios.Any(e => e.id == id);
         }
 
-        private async void agregarLibroFavorito(int idUsuario, Libro libro)
-        {
-            var usuario = await _context.usuarios.FindAsync(idUsuario);
-            if(usuario != null) 
-            {
-               usuario.librosFavoritos.Add(libro);
-               await _context.SaveChangesAsync();
-            }
-            
-
-        }
-
-        private async void agregarAutorFavorito(int idUsuario, Autor autor)
-        {
-            var usuario = await _context.usuarios.FindAsync(idUsuario);
-            if (usuario != null)
-            {
-                usuario.autoresFavoritos.Add(autor);
-                await _context.SaveChangesAsync();
-            }
-        }
+       
     }
 }

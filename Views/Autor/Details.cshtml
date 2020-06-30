@@ -29,11 +29,11 @@
     <br />
     @foreach (var item in Model.libros)
     {
+        
         var idLibro = new { id = item.id };
-
-
-        @Html.ActionLink((item.titulo), "Details", "Libro", idLibro.id)
-        <br/>
+        @Html.ActionLink(item.titulo, "Details", "Libro", idLibro)
+        
+        <br />
         //Evaluar si se agrega la puntuacion de cada libro.
     }
 </div>
@@ -41,11 +41,35 @@
     @using (Html.BeginForm())
     {
     <div>
-        <label for="agregar">¿Es favorito?</label>
-        <p id="agregar">
-            @Html.CheckBox("Agregar",(bool)ViewBag.esFav)
-        </p>
-        <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="btn-outline-dark form-control" />
+
+        @if (ViewBag.esFav == null)
+        {
+            var idAutor = new { id = (int)ViewBag.idAutor };
+            <div id="actionAgregar">
+                <p hidden>
+                    @Html.TextBox("id", idAutor.id)
+                </p>
+
+                <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="btn-outline-dark form-control" />
+
+            </div>
+
+        }
+        else
+        {
+
+            var idAutor = new { id = (int)ViewBag.idAutor };
+            <div id="actionQuitar">
+                <p hidden>
+                    @Html.TextBox("id", idAutor.id)
+                </p>
+
+                <input type="submit" asp-action="quitarFavorito" value="Quitar de Favoritos" class="btn-outline-dark form-control" />
+
+            </div>
+
+        }
+
     </div>
     }
 

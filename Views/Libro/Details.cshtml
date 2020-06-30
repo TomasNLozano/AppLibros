@@ -47,11 +47,35 @@
     @using (Html.BeginForm())
     {
     <div>
-        <label for="agregar">¿Es favorito?</label>
-        <p id="agregar">
-            @Html.CheckBox("id",(bool)ViewBag.esFav)
+        
+        @if (ViewBag.esFav == null)
+        {
+            var idLibro = new { id = (int) ViewBag.idLibro };
+            <div id="actionAgregar">
+                <p hidden>
+                    @Html.TextBox("id",idLibro.id)
+                </p>
+                
+                <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="btn-outline-dark form-control"/>
+                
+            </div>
+
+        }
+        else
+        {
+            
+            var idLibro = new { id = (int) ViewBag.idLibro };
+    <div id="actionQuitar">
+        <p hidden>
+            @Html.TextBox("id", idLibro.id)
         </p>
-        <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="btn-outline-dark form-control" />
+
+        <input type="submit" asp-action="quitarFavorito" value="Quitar de Favoritos" class="btn-outline-dark form-control" />
+        
+    </div>
+
+        }
+
     </div>
     }
 
