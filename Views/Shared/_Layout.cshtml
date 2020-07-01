@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,7 +20,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            @{ 
+                                if (Context.Session.GetInt32("id") == 0 || Context.Session.GetString("esAdmin") == "True")
+                                {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                }
+                            }
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Autor" asp-action="Index">Autores</a>
@@ -28,7 +34,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Libro" asp-action="Index">Libros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuario</a>
+                            @{
+                            if (Context.Session.GetString("esAdmin") == "True" ) {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuario</a>
+                            }else if (Context.Session.GetInt32("id") != 0)
+                            { 
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Details" asp-route-id="@Context.Session.GetInt32("id").ToString()">@Context.Session.GetString("username")</a>
+                            } 
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @{
+                                if (Context.Session.GetInt32("id") != 0)
+                                {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="desLogear">Cerrar Sesion</a>
+                                }
+                            }
                         </li>
                     </ul>
                 </div>

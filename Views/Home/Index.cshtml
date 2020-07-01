@@ -22,5 +22,15 @@
       </div>
 
   }
+    <div>
+        <h4>Registrarse</h4>
+        <div>
+            @using (Html.BeginForm())
+            {
+                <input type="submit" asp-action="Create" value="Crear Usuario" asp-controller="Usuario" class="btn-outline-dark form-control" />
+            }
+
+        </div>
+    </div>
 
  </div>

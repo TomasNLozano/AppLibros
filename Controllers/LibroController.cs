@@ -204,5 +204,13 @@ namespace AppLibros.Controllers
             return RedirectToAction("Details", idLibro);
 
         }
+        public async void puntuar(int i, int id)
+        {
+            var libro = await _context.libros.FindAsync(id);
+            libro.puntaje += i;
+            libro.votos++;
+            _context.Update(libro);
+            await _context.SaveChangesAsync();
+        }
     }
 }

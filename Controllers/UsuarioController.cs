@@ -10,6 +10,7 @@ using AppLibros.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+
 namespace AppLibros.Controllers
 {
     public class UsuarioController : Controller
@@ -75,7 +76,11 @@ namespace AppLibros.Controllers
                 usuario.esAdmin = false;
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                HttpContext.Session.SetString("username", usuario.username);
+                HttpContext.Session.SetInt32("id", usuario.id);
+                HttpContext.Session.SetString("esAdmin", usuario.esAdmin.ToString());
+                var idUsuario = new { id = usuario.id };
+                return RedirectToAction(nameof(Details),idUsuario);
                 //Definir si al crear un usuario se vuelve al index, al details o al home.
             }
             return View(usuario);
