@@ -56,15 +56,15 @@ namespace AppLibros.Controllers
             ViewBag.idLibro = libro.id;
             if (HttpContext.Session.GetString("esAdmin") == "True")
             {
-                return View();
+                return View("Details");
             }
             if (HttpContext.Session.GetInt32("id") != 0 )
             {
                 ViewBag.puntuaje = buscarPuntaje(libro.id, (int)HttpContext.Session.GetInt32("id"));
-                return View();
+                return View("DetailsUsuario");
             }
 
-            return View(libro);
+            return View("DetailsInvitado");
         }
 
         // GET: Libro/Create

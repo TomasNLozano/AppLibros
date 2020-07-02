@@ -48,7 +48,7 @@
     {
         @using (Html.BeginForm())
         {
-            <label for="puntaje">Puntar</label>
+            <label for="puntaje">Puntuar</label>
             <input type="range" min="0" max="10" id="puntaje" />
             var idLibro = new { id = (int)ViewBag.idLibro };
             <p hidden>
@@ -59,7 +59,12 @@
     }
     else
     {
-
+        <div>
+            <h5>Puntaje</h5>
+            <p>
+            @ViewBag.puntaje
+            </p>
+        </div>
     }
 </div>
 <div>
