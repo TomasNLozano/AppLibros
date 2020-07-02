@@ -115,6 +115,32 @@ namespace AppLibros.Migrations
                     b.ToTable("librosFavoritos");
                 });
 
+            modelBuilder.Entity("AppLibros.Models.LibrosPuntuados", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Usuarioid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idLibro")
+                        .HasColumnType("int");
+
+                    b.Property<int>("idUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<int>("puntaje")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Usuarioid");
+
+                    b.ToTable("librosPuntuados");
+                });
+
             modelBuilder.Entity("AppLibros.Models.Usuario", b =>
                 {
                     b.Property<int>("id")
@@ -167,6 +193,13 @@ namespace AppLibros.Migrations
                         .HasForeignKey("autorid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AppLibros.Models.LibrosPuntuados", b =>
+                {
+                    b.HasOne("AppLibros.Models.Usuario", null)
+                        .WithMany("librosPuntuados")
+                        .HasForeignKey("Usuarioid");
                 });
 #pragma warning restore 612, 618
         }

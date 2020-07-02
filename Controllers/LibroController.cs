@@ -54,6 +54,15 @@ namespace AppLibros.Controllers
             ViewBag.esFav = esFav;
 
             ViewBag.idLibro = libro.id;
+            if (HttpContext.Session.GetString("esAdmin") == "True")
+            {
+                return View();
+            }
+            if (HttpContext.Session.GetInt32("id") != 0 )
+            {
+                ViewBag.puntuaje = buscarPuntaje(libro.id, (int)HttpContext.Session.GetInt32("id"));
+                return View();
+            }
 
             return View(libro);
         }
@@ -204,13 +213,28 @@ namespace AppLibros.Controllers
             return RedirectToAction("Details", idLibro);
 
         }
-        public async void puntuar(int i, int id)
+        public async void puntuar(int puntaje, int idLibro)
         {
-            var libro = await _context.libros.FindAsync(id);
-            libro.puntaje += i;
+            var libro = await _context.libros.FindAsync(idLibro);
+            LibrosPuntuados lp = new LibrosPuntuados();
+            lp.idLibro = libro.id;
+            lp.idUsuario = (int)HttpContext.Session.GetInt32("id");
+            lp.puntaje = puntaje;
+            _context.Add(lp);
+            libro.puntaje += puntaje;
             libro.votos++;
             _context.Update(libro);
             await _context.SaveChangesAsync();
+        }
+        public int buscarPuntaje(int idLibro, int idUsuario)
+        {
+            int puntaje = -1;
+            LibrosPuntuados lp = _context.librosPuntuados.FirstOrDefault(e => e.idLibro == idLibro && e.idUsuario == idUsuario);
+            if (lp != null)
+            {
+                puntaje = lp.puntaje;
+            }
+            return puntaje;
         }
     }
 }

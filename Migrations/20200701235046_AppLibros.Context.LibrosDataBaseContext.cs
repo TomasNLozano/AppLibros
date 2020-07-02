@@ -2,7 +2,7 @@
 
 namespace AppLibros.Migrations
 {
-    public partial class AppLibrosContextLibroDataBaseContext : Migration
+    public partial class AppLibrosContextLibrosDataBaseContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,6 +74,28 @@ namespace AppLibros.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "librosPuntuados",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    idUsuario = table.Column<int>(nullable: false),
+                    idLibro = table.Column<int>(nullable: false),
+                    puntaje = table.Column<int>(nullable: false),
+                    Usuarioid = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_librosPuntuados", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_librosPuntuados_usuarios_Usuarioid",
+                        column: x => x.Usuarioid,
+                        principalTable: "usuarios",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "libros",
                 columns: table => new
                 {
@@ -118,6 +140,11 @@ namespace AppLibros.Migrations
                 name: "IX_libros_autorid",
                 table: "libros",
                 column: "autorid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_librosPuntuados_Usuarioid",
+                table: "librosPuntuados",
+                column: "Usuarioid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -130,6 +157,9 @@ namespace AppLibros.Migrations
 
             migrationBuilder.DropTable(
                 name: "librosFavoritos");
+
+            migrationBuilder.DropTable(
+                name: "librosPuntuados");
 
             migrationBuilder.DropTable(
                 name: "autores");

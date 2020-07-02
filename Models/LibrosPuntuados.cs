@@ -15,7 +15,7 @@ namespace AppLibros.Models
         public int idUsuario { get; set; }
         
         public int idLibro { get; set; }
-
+        [Range(0,10)]
         public int puntaje { get; set; }
 
     }

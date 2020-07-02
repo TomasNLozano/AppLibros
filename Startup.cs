@@ -75,6 +75,10 @@ namespace AppLibros
                     name: "agregarAutorFav",
                     pattern: "{controller=Autor}/{action=agregarFavorito}/{id}"
                     );
+                endpoints.MapControllerRoute(
+                    name: "puntuar",
+                    pattern: "{controller=Libro}/{action=puntuar}/{puntaje}/{idLibro}"
+                    );
             });
         }
     }
