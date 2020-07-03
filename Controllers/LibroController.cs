@@ -60,7 +60,7 @@ namespace AppLibros.Controllers
             }
             if (HttpContext.Session.GetInt32("id") != 0 )
             {
-                ViewBag.puntuaje = buscarPuntaje(libro.id, (int)HttpContext.Session.GetInt32("id"));
+                ViewBag.puntaje = buscarPuntaje(libro.id, (int)HttpContext.Session.GetInt32("id"));
                 return View("DetailsUsuario");
             }
 
@@ -213,11 +213,12 @@ namespace AppLibros.Controllers
             return RedirectToAction("Details", idLibro);
 
         }
-        public async void puntuar(int puntaje, int idLibro)
+        public async Task<IActionResult> puntuar(int idLibro, int puntaje)
         {
-            var libro = await _context.libros.FindAsync(idLibro);
+            Libro libro = await _context.libros.FindAsync(idLibro);
+            int id = libro.id;
             LibrosPuntuados lp = new LibrosPuntuados();
-            lp.idLibro = libro.id;
+            lp.idLibro = id;
             lp.idUsuario = (int)HttpContext.Session.GetInt32("id");
             lp.puntaje = puntaje;
             _context.Add(lp);
@@ -225,6 +226,8 @@ namespace AppLibros.Controllers
             libro.votos++;
             _context.Update(libro);
             await _context.SaveChangesAsync();
+            var idDetails = new { id = libro.id };
+            return RedirectToAction("Details",idDetails);
         }
         public int buscarPuntaje(int idLibro, int idUsuario)
         {

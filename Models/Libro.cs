@@ -22,6 +22,7 @@ namespace AppLibros.Models
         public int autorid { get; set; }
         [DisplayName("Reseña")]
         public string resena { get; set; }
+        [DisplayName("Puntaje Promedio")]
         public double puntaje { get; set; }
         [DisplayName("Votos")]
         public int votos { get; set; }

@@ -32,7 +32,6 @@
             @Html.DisplayNameFor(model => model.puntaje)
         </dt>
         <dd class="col-sm-10">
-            @*@Html.DisplayFor(model => model.puntaje)*@
             @Html.ViewBag.promedio
         </dd>
         <dt class="col-sm-2">
@@ -49,18 +48,18 @@
         @using (Html.BeginForm())
         {
             <label for="puntaje">Puntuar</label>
-            <input type="range" min="0" max="10" id="puntaje" />
+            <input type="range" min="0" max="10" id="puntaje" name="puntaje"/>
             var idLibro = new { id = (int)ViewBag.idLibro };
             <p hidden>
-                @Html.TextBox("id", idLibro.id)
+                @Html.TextBox("idLibro",idLibro.id)
             </p>
-            <input type="submit" asp-action="puntuar" asp-controller="Libro" />
+            <input type="submit" asp-action="puntuar"/>
         }
     }
     else
     {
         <div>
-            <h5>Puntaje</h5>
+            <h6>Puntaje</h6>
             <p>
             @ViewBag.puntaje
             </p>

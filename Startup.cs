@@ -77,7 +77,7 @@ namespace AppLibros
                     );
                 endpoints.MapControllerRoute(
                     name: "puntuar",
-                    pattern: "{controller=Libro}/{action=puntuar}/{puntaje}/{idLibro}"
+                    pattern: "{controller=Libro}/{action=puntuar}/{idLibro}/{puntaje}"
                     );
             });
         }
