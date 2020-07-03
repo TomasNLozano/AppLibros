@@ -9,6 +9,7 @@ using AppLibros.Context;
 using AppLibros.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Data.SqlClient.Server;
 
 namespace AppLibros.Controllers
 {
@@ -24,8 +25,12 @@ namespace AppLibros.Controllers
         // GET: Libro
         public async Task<IActionResult> Index()
         {
-           
-            return View(await _context.libros.ToListAsync());
+            
+            if (HttpContext.Session.GetString("esAdmin") != "True")
+            {
+                return View("IndexUser", await _context.libros.ToListAsync());
+            }
+            return View("Index", await _context.libros.ToListAsync());
         }
 
         // GET: Libro/Details/5
@@ -38,6 +43,7 @@ namespace AppLibros.Controllers
 
             var libro = await _context.libros
                 .FirstOrDefaultAsync(m => m.id == id);
+
             if (libro == null)
             {
                 return NotFound();
@@ -56,15 +62,15 @@ namespace AppLibros.Controllers
             ViewBag.idLibro = libro.id;
             if (HttpContext.Session.GetString("esAdmin") == "True")
             {
-                return View("Details");
+                return View("Details", libro);
             }
             if (HttpContext.Session.GetInt32("id") != 0 )
             {
                 ViewBag.puntaje = buscarPuntaje(libro.id, (int)HttpContext.Session.GetInt32("id"));
-                return View("DetailsUsuario");
+                return View("DetailsUsuario", libro);
             }
 
-            return View("DetailsInvitado");
+            return View("DetailsInvitado", libro);
         }
 
         // GET: Libro/Create
@@ -238,6 +244,22 @@ namespace AppLibros.Controllers
                 puntaje = lp.puntaje;
             }
             return puntaje;
+        }
+
+        public async Task<IActionResult> buscarLibro(string testo)
+        {
+            var libros = from Libros in _context.libros
+                          where Libros.titulo.Contains(testo)
+                                select Libros;
+
+            List<Libro> resultado = await libros.ToListAsync();
+
+            if(HttpContext.Session.GetString("esAdmin") == "True")
+            {
+                return View("IndexBusquedaAdmin", resultado);
+            }
+
+            return View("IndexBusquedaUser", resultado);
         }
     }
 }

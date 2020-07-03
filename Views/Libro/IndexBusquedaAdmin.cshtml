@@ -1,24 +1,12 @@
 ﻿@model IEnumerable<AppLibros.Models.Libro>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "IndexBusqueda";
 }
 
-<h1>Index</h1>
+<h1>Resultados</h1>
 
-@using (Html.BeginForm()) 
-{
-<div>
-    <label for="busqueda1">Buscar por titulo</label>
-    <p id="busqueda1">
-        @Html.TextBox("testo")
-    </p>
-    <input type="submit" asp-action="buscarLibro" value="Buscar"/>
-</div>
-}
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -61,3 +49,6 @@
 }
     </tbody>
 </table>
+<div>
+    <a asp-action="Index">Volver a Libros</a>
+</div>

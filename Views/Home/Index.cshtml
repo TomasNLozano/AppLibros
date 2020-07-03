@@ -18,6 +18,13 @@
           <p id="clave">
               @Html.Password("id2")
           </p>
+          @if(ViewBag.Error != null) 
+          {
+              <p style="color:red;">
+                  @Html.ViewBag.Error
+              </p>
+          }
+          
           <input type="submit" asp-action="LogIn" value="Ingresar" class="btn-outline-dark form-control" />
       </div>
 

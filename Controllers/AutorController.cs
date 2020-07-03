@@ -30,7 +30,11 @@ namespace AppLibros.Controllers
                 autor.libros = new List<Libro>();
                 autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
             } 
-            return View(await _context.autores.ToListAsync());
+            if(HttpContext.Session.GetString("esAdmin") != "True")
+            {
+                return View("IndexUser", autores);
+            }
+            return View("Index", autores);
         }
 
         // GET: Autor/Details/5
@@ -198,6 +202,27 @@ namespace AppLibros.Controllers
             var idAutor = new { id = autorFav.idAutor };
             return RedirectToAction("Details", idAutor);
 
+        }
+        public async Task<IActionResult> buscarAutor(string testo)
+        {
+            var autores = from Autores in _context.autores
+                         where Autores.nombre.Contains(testo) || Autores.apellido.Contains(testo)
+                         select Autores;
+
+            List<Autor> resultado = await autores.ToListAsync();
+
+            foreach (Autor autor in resultado)
+            {
+                autor.libros = new List<Libro>();
+                autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
+            }
+
+            if (HttpContext.Session.GetString("esAdmin") == "True")
+            {
+                return View("IndexBusquedaAdmin", resultado);
+            }
+
+            return View("IndexBusquedaUser", resultado);
         }
     }
 }

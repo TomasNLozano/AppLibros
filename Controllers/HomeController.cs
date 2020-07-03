@@ -63,7 +63,9 @@ namespace AppLibros.Controllers
 
                 return RedirectToAction(nameof(UsuarioController.Details), nameof(Usuario), idUsuario);
             }
-            return View();
+            string error = "Nombre de usuario o contraseña incorrectos";
+            ViewBag.Error = error;
+            return View("Index");
         }
         public IActionResult desLogear()
         {
