@@ -81,7 +81,7 @@ namespace AppLibros.Controllers
                 HttpContext.Session.SetString("esAdmin", usuario.esAdmin.ToString());
                 var idUsuario = new { id = usuario.id };
                 return RedirectToAction(nameof(Details),idUsuario);
-                //Definir si al crear un usuario se vuelve al index, al details o al home.
+                
             }
             return View(usuario);
         }
@@ -132,7 +132,14 @@ namespace AppLibros.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                if (HttpContext.Session.GetString("esAdmin") == "True")
+                {
+                    return RedirectToAction(nameof(Index));
+                } else
+                {
+                    var idUsuario = new { id = usuario.id };
+                    return RedirectToAction(nameof(Details), idUsuario);
+                }
             }
             return View(usuario);
         }

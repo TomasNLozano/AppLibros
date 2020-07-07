@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+    <h1>@Html.DisplayFor(model => model.nombre) @Html.DisplayFor(model => model.apellido)</h1>
 
 <div>
-    <h4>Autor</h4>
+    <h4>Detalles</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -34,48 +34,10 @@
         @Html.ActionLink(item.titulo, "Details", "Libro", idLibro)
         
         <br />
-        //Evaluar si se agrega la puntuacion de cada libro.
+        
     }
 </div>
+
 <div>
-    @using (Html.BeginForm())
-    {
-    <div>
-
-        @if (ViewBag.esFav == null)
-        {
-            var idAutor = new { id = (int)ViewBag.idAutor };
-            <div id="actionAgregar">
-                <p hidden>
-                    @Html.TextBox("id", idAutor.id)
-                </p>
-
-                <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="btn-outline-dark form-control" />
-
-            </div>
-
-        }
-        else
-        {
-
-            var idAutor = new { id = (int)ViewBag.idAutor };
-            <div id="actionQuitar">
-                <p hidden>
-                    @Html.TextBox("id", idAutor.id)
-                </p>
-
-                <input type="submit" asp-action="quitarFavorito" value="Quitar de Favoritos" class="btn-outline-dark form-control" />
-
-            </div>
-
-        }
-
-    </div>
-    }
-
-
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver al indice</a>
 </div>

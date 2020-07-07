@@ -48,7 +48,7 @@ namespace AppLibros.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.autor = buscarAutor(libro.autorid);
             double promedio = 0;
             if(libro.votos != 0) 
             {
@@ -253,7 +253,7 @@ namespace AppLibros.Controllers
                                 select Libros;
 
             List<Libro> resultado = await libros.ToListAsync();
-
+            ViewBag.busquedaLibro = testo;
             if(HttpContext.Session.GetString("esAdmin") == "True")
             {
                 return View("IndexBusquedaAdmin", resultado);
@@ -261,5 +261,12 @@ namespace AppLibros.Controllers
 
             return View("IndexBusquedaUser", resultado);
         }
+
+        public string buscarAutor(int id)
+        {
+            Autor autor = _context.autores.Find(id);
+            return autor.nombre + " " + autor.apellido;
+        }
+
     }
 }

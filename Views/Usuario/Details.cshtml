@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+    <h1>@Html.DisplayFor(model => model.username)</h1>
 
 <div>
-    <h4>Usuario</h4>
+    <h4>Detalles</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -34,14 +34,9 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.username)
         </dd>
-        @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.password)
-        </dd>*@
     </dl>
 </div>
+<hr />
 <div>
     <div>
         @Html.DisplayNameFor(model => model.librosFavoritos)
@@ -61,7 +56,11 @@
         }
     </div>
 </div>
+<hr />
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.id">Editar</a> 
+    @if (Context.Session.GetString("esAdmin") == "True")
+    {
+        <a asp-action="Index">Volver al indice</a>
+    }
 </div>

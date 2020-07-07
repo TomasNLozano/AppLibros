@@ -4,7 +4,7 @@
     ViewData["Title"] = "IndexBusqueda";
 }
 
-<h1>Resultados</h1>
+    <h1>Resultados para "@ViewBag.busquedaLibro"</h1>
 
 
 <table class="table">
@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.votos)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.id">Details</a>
+                <a asp-action="Details" asp-route-id="@item.id">Detalles</a>
             </td>
         </tr>
 }

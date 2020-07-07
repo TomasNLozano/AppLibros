@@ -4,11 +4,9 @@
     ViewData["Title"] = "IndexBusquedaAdmin";
 }
 
-<h1>IndexBusquedaAdmin</h1>
+<h1>Resultados para "@ViewBag.busqueda"</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -37,9 +35,9 @@
                 @Html.DisplayFor(modelItem => item.libros.Count)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Eliminar</a>
             </td>
         </tr>
 }

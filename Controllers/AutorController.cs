@@ -216,7 +216,7 @@ namespace AppLibros.Controllers
                 autor.libros = new List<Libro>();
                 autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
             }
-
+            ViewBag.busqueda = testo;
             if (HttpContext.Session.GetString("esAdmin") == "True")
             {
                 return View("IndexBusquedaAdmin", resultado);
