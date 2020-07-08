@@ -3,38 +3,39 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Bienvenido</h1>
+    <h1 id="tituloHome" class="display-4">Bienvenido</h1>
     <hr />
     
   @using (Html.BeginForm())
   {
-      <h4>Login</h4>
-      <div>
-          <label for="usuario">Nombre de Usuario</label>
-          <p id="usuario">
-              @Html.TextBox("id")
-          </p>
-          <label for="clave">Contraseña</label>
-          <p id="clave">
-              @Html.Password("id2")
-          </p>
-          @if(ViewBag.Error != null) 
-          {
-              <p style="color:red;">
-                  @Html.ViewBag.Error
-              </p>
-          }
-          
-          <input type="submit" asp-action="LogIn" value="Ingresar" class="btn-outline-dark form-control" />
-      </div>
+      
+<div class="login">
+    <h4>Login</h4>
+    <label for="usuario">Nombre de Usuario</label>
+    <p id="usuario">
+        @Html.TextBox("id")
+    </p>
+    <label for="clave">Contraseña</label>
+    <p id="clave">
+        @Html.Password("id2")
+    </p>
+    @if (ViewBag.Error != null)
+    {
+        <p style="color:red;">
+            @Html.ViewBag.Error
+        </p>
+    }
+
+    <input id="botonHome" type="submit" asp-action="LogIn" value="Ingresar" class="boton"/>
+</div>
       <hr />
   }
-    <div>
+    <div class="login">
         <h4>Registrarse</h4>
         <div>
             @using (Html.BeginForm())
             {
-                <input type="submit" asp-action="Create" value="Crear Usuario" asp-controller="Usuario" class="btn-outline-dark form-control" />
+                <input class="boton" type="submit" asp-action="Create" value="Crear Usuario" asp-controller="Usuario" />
             }
 
         </div>
