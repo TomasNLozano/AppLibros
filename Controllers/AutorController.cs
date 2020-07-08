@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using AppLibros.Context;
 using AppLibros.Models;
 using Microsoft.AspNetCore.Http;
+using AppLibros.Helper_Functions;
 
 namespace AppLibros.Controllers
 {
     public class AutorController : Controller
     {
         private readonly LibrosDataBaseContext _context;
-
+        private readonly Helpers _helpers;
+      
         public AutorController(LibrosDataBaseContext context)
         {
             _context = context;
+            _helpers = new Helpers(_context);
         }
 
         // GET: Autor
@@ -55,7 +58,7 @@ namespace AppLibros.Controllers
             autor.libros = new List<Libro>();
             autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
 
-            AutoresFavoritos esFav = buscarFavorito(autor.id);
+            AutoresFavoritos esFav = _helpers.buscarAutorFavorito(autor.id, HttpContext.Session.GetInt32("id"));
             ViewBag.esFav = esFav;
 
             ViewBag.idAutor = autor.id;
@@ -175,47 +178,39 @@ namespace AppLibros.Controllers
         {
             return _context.autores.Any(e => e.id == id);
         }
-        private AutoresFavoritos buscarFavorito(int id)
-        {
-            return _context.autoresFavoritos.FirstOrDefault(e => e.idAutor == id);
-            
-        }
         public async Task<IActionResult> agregarFavorito(int id)
         {
             //Task<IActionResult>
             var autorFav = new AutoresFavoritos();
+
             autorFav.idAutor = id;
             autorFav.idUsuario = (int)HttpContext.Session.GetInt32("id");
+
             await _context.autoresFavoritos.AddAsync(autorFav);
             await _context.SaveChangesAsync();
+
             var idAutor = new { id = autorFav.idAutor };
+
             return RedirectToAction("Details", idAutor);
 
         }
         public async Task<IActionResult> quitarFavorito(int id)
         {
-            //Task<IActionResult>
-            var autorFav = await _context.autoresFavoritos.FirstOrDefaultAsync(t => t.idAutor == id && t.idUsuario == HttpContext.Session.GetInt32("id"));
+            int? idUsuario = HttpContext.Session.GetInt32("id");
+            var autorFav = _helpers.buscarAutorFavorito(id, idUsuario);
 
             _context.autoresFavoritos.Remove(autorFav);
             await _context.SaveChangesAsync();
+
             var idAutor = new { id = autorFav.idAutor };
+
             return RedirectToAction("Details", idAutor);
 
         }
-        public async Task<IActionResult> buscarAutor(string testo)
+        public IActionResult buscarAutor(string testo)
         {
-            var autores = from Autores in _context.autores
-                         where Autores.nombre.Contains(testo) || Autores.apellido.Contains(testo)
-                         select Autores;
+            List<Autor> resultado = _helpers.buscarAutores(testo);
 
-            List<Autor> resultado = await autores.ToListAsync();
-
-            foreach (Autor autor in resultado)
-            {
-                autor.libros = new List<Libro>();
-                autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
-            }
             ViewBag.busqueda = testo;
             if (HttpContext.Session.GetString("esAdmin") == "True")
             {
