@@ -80,8 +80,8 @@ namespace AppLibros
                     pattern: "{controller=Libro}/{action=puntuar}/{idLibro}/{puntaje}"
                     );
                 endpoints.MapControllerRoute(
-                   name: "buscarLibro",
-                   pattern: "{controller=Libro}/{action=buscarLibro}/{testo}"
+                   name: "Search",
+                   pattern: "{controller=Libro}/{action=Search}/{testo}"
                    );
                 endpoints.MapControllerRoute(
                    name: "buscarAutor",

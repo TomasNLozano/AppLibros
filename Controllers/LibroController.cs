@@ -10,16 +10,19 @@ using AppLibros.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient.Server;
+using AppLibros.Helper_Functions;
 
 namespace AppLibros.Controllers
 {
     public class LibroController : Controller
     {
         private readonly LibrosDataBaseContext _context;
+        private readonly Helpers _helpers;
 
         public LibroController(LibrosDataBaseContext context)
         {
             _context = context;
+            _helpers = new Helpers(_context);
         }
 
         // GET: Libro
@@ -48,25 +51,22 @@ namespace AppLibros.Controllers
             {
                 return NotFound();
             }
-            ViewBag.autor = buscarAutor(libro.autorid);
-            double promedio = 0;
-            if(libro.votos != 0) 
-            {
-                promedio = libro.puntaje / libro.votos;
-            }
+
+            double promedio = _helpers.Promedio(libro);
+           
+            ViewBag.autor = _helpers.BuscarAutor(libro.autorid);
             ViewBag.promedio = promedio;
-
-            LibrosFavoritos esFav = buscarFavorito(libro.id);
-            ViewBag.esFav = esFav;
-
+            ViewBag.esFav = await _helpers.BuscarLibroFavorito(libro.id, HttpContext.Session.GetInt32("id"));
             ViewBag.idLibro = libro.id;
+            
             if (HttpContext.Session.GetString("esAdmin") == "True")
             {
                 return View("Details", libro);
             }
             if (HttpContext.Session.GetInt32("id") != 0 )
             {
-                ViewBag.puntaje = buscarPuntaje(libro.id, (int)HttpContext.Session.GetInt32("id"));
+                ViewBag.puntaje = _helpers.BuscarPuntaje(libro.id, HttpContext.Session.GetInt32("id"));
+
                 return View("DetailsUsuario", libro);
             }
 
@@ -191,68 +191,53 @@ namespace AppLibros.Controllers
             return _context.libros.Any(e => e.id == id);
         }
 
-        private LibrosFavoritos buscarFavorito(int id)
-        {
-            return _context.librosFavoritos.FirstOrDefault(e => e.idLibro == id);
-                          
-        }
         public async Task<IActionResult> agregarFavorito(int id)
         {
-            //Task<IActionResult>
+          
             var libroFav = new LibrosFavoritos();
+
             libroFav.idLibro = id;
             libroFav.idUsuario = (int)HttpContext.Session.GetInt32("id");
+
             await _context.librosFavoritos.AddAsync(libroFav);
             await _context.SaveChangesAsync();
+
             var idLibro = new { id = libroFav.idLibro };
             return RedirectToAction("Details",idLibro);
            
         }
         public async Task<IActionResult> quitarFavorito(int id)
         {
-            //Task<IActionResult>
-            var libroFav = await _context.librosFavoritos.FirstOrDefaultAsync(t=> t.idLibro == id && t.idUsuario == HttpContext.Session.GetInt32("id"));
+            var libroFav = await _helpers.BuscarLibroFavorito(id, HttpContext.Session.GetInt32("id"));
 
             _context.librosFavoritos.Remove(libroFav);
             await _context.SaveChangesAsync();
+
             var idLibro = new { id = libroFav.idLibro };
             return RedirectToAction("Details", idLibro);
 
         }
+
+        //Califica un libro y recarga la pagina.
         public async Task<IActionResult> puntuar(int idLibro, int puntaje)
         {
             Libro libro = await _context.libros.FindAsync(idLibro);
-            int id = libro.id;
-            LibrosPuntuados lp = new LibrosPuntuados();
-            lp.idLibro = id;
-            lp.idUsuario = (int)HttpContext.Session.GetInt32("id");
-            lp.puntaje = puntaje;
-            _context.Add(lp);
-            libro.puntaje += puntaje;
-            libro.votos++;
-            _context.Update(libro);
+
+            _context.librosPuntuados.Add(_helpers.CalificarLibro(idLibro,(int)HttpContext.Session.GetInt32("id"),puntaje));
+            _helpers.PuntuarLibro(libro, puntaje);
+
             await _context.SaveChangesAsync();
+
             var idDetails = new { id = libro.id };
             return RedirectToAction("Details",idDetails);
         }
-        public int buscarPuntaje(int idLibro, int idUsuario)
-        {
-            int puntaje = -1;
-            LibrosPuntuados lp = _context.librosPuntuados.FirstOrDefault(e => e.idLibro == idLibro && e.idUsuario == idUsuario);
-            if (lp != null)
-            {
-                puntaje = lp.puntaje;
-            }
-            return puntaje;
-        }
+        
 
-        public async Task<IActionResult> buscarLibro(string testo)
+        //Devuelve un Index con los resultados de la busqueda
+        public async Task<IActionResult> Search(string testo)
         {
-            var libros = from Libros in _context.libros
-                          where Libros.titulo.Contains(testo)
-                                select Libros;
-
-            List<Libro> resultado = await libros.ToListAsync();
+            
+            var resultado = await _helpers.buscarLibros(testo);
             ViewBag.busquedaLibro = testo;
             if(HttpContext.Session.GetString("esAdmin") == "True")
             {
@@ -262,11 +247,7 @@ namespace AppLibros.Controllers
             return View("IndexBusquedaUser", resultado);
         }
 
-        public string buscarAutor(int id)
-        {
-            Autor autor = _context.autores.Find(id);
-            return autor.nombre + " " + autor.apellido;
-        }
+     
 
     }
 }

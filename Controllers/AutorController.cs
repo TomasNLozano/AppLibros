@@ -58,12 +58,22 @@ namespace AppLibros.Controllers
             autor.libros = new List<Libro>();
             autor.libros = await _context.libros.Where(e => e.autorid == autor.id).ToListAsync();
 
-            AutoresFavoritos esFav = _helpers.buscarAutorFavorito(autor.id, HttpContext.Session.GetInt32("id"));
+            if (HttpContext.Session.GetInt32("id") == 0) 
+            {
+                return View("DetailsInvitado", autor);
+            }
+
+            AutoresFavoritos esFav = await _helpers.buscarAutorFavorito(autor.id, HttpContext.Session.GetInt32("id"));
             ViewBag.esFav = esFav;
 
             ViewBag.idAutor = autor.id;
 
-            return View(autor);
+            if(HttpContext.Session.GetString("esAdmin") == "True")
+            {
+                return View("Details", autor);
+            }
+
+            return View("DetailsUser", autor);
         }
 
         // GET: Autor/Create
@@ -164,13 +174,12 @@ namespace AppLibros.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var autor = await _context.autores.FindAsync(id);
-            var libros = await _context.libros.Where(e => e.autorid == id).ToListAsync();
-            foreach(Libro libro in libros) 
-            {
-                _context.libros.Remove(libro);
-            }
+
+            _helpers.quitarLibros(id);
             _context.autores.Remove(autor);
+
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -178,9 +187,10 @@ namespace AppLibros.Controllers
         {
             return _context.autores.Any(e => e.id == id);
         }
+      
         public async Task<IActionResult> agregarFavorito(int id)
         {
-            //Task<IActionResult>
+            
             var autorFav = new AutoresFavoritos();
 
             autorFav.idAutor = id;
@@ -197,7 +207,7 @@ namespace AppLibros.Controllers
         public async Task<IActionResult> quitarFavorito(int id)
         {
             int? idUsuario = HttpContext.Session.GetInt32("id");
-            var autorFav = _helpers.buscarAutorFavorito(id, idUsuario);
+            var autorFav = await _helpers.buscarAutorFavorito(id, idUsuario);
 
             _context.autoresFavoritos.Remove(autorFav);
             await _context.SaveChangesAsync();

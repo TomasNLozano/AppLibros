@@ -9,6 +9,7 @@ using AppLibros.Context;
 using AppLibros.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using AppLibros.Helper_Functions;
 
 
 namespace AppLibros.Controllers
@@ -16,10 +17,12 @@ namespace AppLibros.Controllers
     public class UsuarioController : Controller
     {
         private readonly LibrosDataBaseContext _context;
+        private readonly Helpers _helpers;
 
         public UsuarioController(LibrosDataBaseContext context)
         {
             _context = context;
+            _helpers = new Helpers(_context);
         }
 
         // GET: Usuario
@@ -43,17 +46,8 @@ namespace AppLibros.Controllers
                 return NotFound();
             }
 
-            var listaLibro = from Libro in _context.libros
-                            join LibrosFavoritos in _context.librosFavoritos on Libro.id equals LibrosFavoritos.idLibro
-                            where LibrosFavoritos.idUsuario == usuario.id
-                            select Libro;
-            usuario.librosFavoritos = listaLibro.ToList();
-            
-            var listaAutor = from Autor in _context.autores
-                             join AutoresFavoritos in _context.autoresFavoritos on Autor.id equals AutoresFavoritos.idAutor
-                             where AutoresFavoritos.idUsuario == usuario.id
-                             select Autor;
-            usuario.autoresFavoritos = listaAutor.ToList();
+            usuario.librosFavoritos = await _helpers.ListarLibrosFavoritos(usuario.id);
+            usuario.autoresFavoritos = await _helpers.ListarAutoresFavoritos(usuario.id);
 
             return View(usuario);
         }
@@ -74,12 +68,16 @@ namespace AppLibros.Controllers
             if (ModelState.IsValid)
             {
                 usuario.esAdmin = false;
+
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
+
                 HttpContext.Session.SetString("username", usuario.username);
                 HttpContext.Session.SetInt32("id", usuario.id);
                 HttpContext.Session.SetString("esAdmin", usuario.esAdmin.ToString());
+
                 var idUsuario = new { id = usuario.id };
+
                 return RedirectToAction(nameof(Details),idUsuario);
                 
             }

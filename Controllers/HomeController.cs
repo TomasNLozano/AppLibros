@@ -9,6 +9,7 @@ using AppLibros.Models;
 using System.Diagnostics.Eventing.Reader;
 using Microsoft.AspNetCore.Http;
 using AppLibros.Context;
+using AppLibros.Helper_Functions;
 
 namespace AppLibros.Controllers
 {
@@ -19,20 +20,26 @@ namespace AppLibros.Controllers
 
         private readonly LibrosDataBaseContext _context;
         private readonly ILogger<HomeController> _logger;
+        private readonly Helpers _helpers;
 
         public HomeController(ILogger<HomeController> logger, LibrosDataBaseContext context)
         {
             _logger = logger;
             _context = context;
+            _helpers = new Helpers(_context);
         }
 
         public IActionResult Index()
         {
-
+            
             HttpContext.Session.SetString("userId", "");
             if (HttpContext.Session.GetString("esAdmin") != "True")
             {
-                HttpContext.Session.SetInt32("id", 0);
+                if (!HttpContext.Session.GetInt32("id").HasValue) 
+                {
+                    HttpContext.Session.SetInt32("id", 0);
+                }
+                
             }
             return View();
         }
