@@ -22,6 +22,7 @@ namespace AppLibros.Models
         [Required]
         public string apellido { get; set; }
         [Range(12, 99)]
+        [DisplayName("Edad")]
         public int edad { get; set; }
         [Required]
         [EmailAddress]

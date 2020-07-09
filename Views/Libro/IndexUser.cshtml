@@ -4,11 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Libros</h1>
+<h1 id="tituloHome">Libros</h1>
 
 @using (Html.BeginForm()) 
 {
-<div>
+<div class="vista">
     <label for="busqueda1">Buscar por titulo</label>
     <p id="busqueda1">
         @Html.TextBox("testo")
@@ -17,8 +17,9 @@
 </div>
 }
 
+
 <table class="table">
-    <thead>
+    <thead class="vista">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.titulo)
@@ -27,15 +28,12 @@
                 @Html.DisplayNameFor(model => model.isbn)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.resena)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.votos)
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="vista">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -43,9 +41,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.isbn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.resena)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.votos)

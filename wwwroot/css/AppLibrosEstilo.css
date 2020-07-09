@@ -1,5 +1,5 @@
 ﻿body {
-    background-image:url(../recursos/wallpaperflare.com_wallpaper.jpg);
+    background-image: url(../recursos/wallpaperflare.com_wallpaper.jpg) ;
 }
 #barraNav {
     background: rgba(0, 0, 0, 0.69);
@@ -8,25 +8,45 @@
     
 }
 #tituloHome {
-    text-shadow: 2px 2px 5px #961c1c;
     font-family: 'Alegreya Sans SC', sans-serif;
 }
 .boton {
-    width: 150px;
+    width: 200px;
     margin: auto;
-    background-color: grey;
     font-weight: 700;
-    border-radius:15%;
 }
 .login {
+    color: black;
+    display:inline-block;
     font-family: 'Balsamiq Sans', cursive;
-    text-shadow: 2px 2px 5px #961c1c;
 }
 .vista {
-    color: lightgray !important;
+    font-family: 'Balsamiq Sans', cursive;
 }
 .piePagina {
-    text-shadow: 2px 2px 5px #961c1c;
     font-family: 'Alegreya Sans SC', sans-serif;
 }
 
+.favoritos {
+    display: inline-block;
+    max-height: 200px;
+    margin: 5px 20px 5px 50px;
+    vertical-align: top;
+    overflow: auto;
+}
+
+.resenia {
+    overflow: auto;
+    max-height: 75px;
+    font-family: 'Special Elite', cursive;
+}
+
+.librosDeAutor {
+    overflow: auto ;
+    max-height: 200px;
+}
+
+.video {
+    text-align: center;
+    display: inline-block;
+}

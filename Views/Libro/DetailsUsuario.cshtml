@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-    <h1>@Html.DisplayFor(model => model.titulo)</h1>
+    <h1 id="tituloHome">@Html.DisplayFor(model => model.titulo)</h1>
 
 <div>
     <h4>Detalles</h4>
@@ -44,8 +44,8 @@
             @Html.DisplayNameFor(model => model.resena)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.resena)
-        </dd>
+            <div class="resenia"> @Html.DisplayFor(model => model.resena) </div>
+</dd>
     </dl>
 </div>
 <hr />
@@ -88,7 +88,7 @@
                         @Html.TextBox("id", idLibro.id)
                     </p>
 
-                    <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="btn-outline-dark form-control" />
+                    <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="boton" />
 
                 </div>
 
@@ -102,7 +102,7 @@
                         @Html.TextBox("id", idLibro.id)
                     </p>
 
-                    <input type="submit" asp-action="quitarFavorito" value="Quitar de Favoritos" class="btn-outline-dark form-control" />
+                    <input type="submit" asp-action="quitarFavorito" value="Quitar de Favoritos" class="boton" />
 
                 </div>
 

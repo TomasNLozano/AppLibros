@@ -118,7 +118,7 @@ namespace AppLibros.Helper_Functions
             _context.Update(libro);
         }
 
-        //Calula y devuelve la calificacion promedio de un libro.
+        //Calcula y devuelve la calificacion promedio de un libro.
         public double Promedio(Libro libro)
         {
             double promedio = 0;

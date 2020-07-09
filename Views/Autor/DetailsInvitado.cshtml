@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-    <h1>@Html.DisplayFor(model => model.nombre) @Html.DisplayFor(model => model.apellido)</h1>
+    <h1 id="tituloHome">@Html.DisplayFor(model => model.nombre) @Html.DisplayFor(model => model.apellido)</h1>
 
 <div>
     <h4>Detalles</h4>
@@ -24,7 +24,7 @@
         </dd>
     </dl>
 </div>
-<div>
+<div class="librosDeAutor">
     @Html.DisplayNameFor(model => model.libros)
     <br />
     @foreach (var item in Model.libros)
@@ -37,7 +37,7 @@
         
     }
 </div>
-
+<hr>
 <div>
     <a asp-action="Index">Volver al indice</a>
 </div>
