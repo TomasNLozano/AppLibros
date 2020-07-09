@@ -118,6 +118,7 @@ namespace AppLibros.Helper_Functions
             _context.Update(libro);
         }
 
+        //Calula y devuelve la calificacion promedio de un libro.
         public double Promedio(Libro libro)
         {
             double promedio = 0;
@@ -130,6 +131,7 @@ namespace AppLibros.Helper_Functions
             return promedio;
         }
 
+        //Devuelve una lista de los libros favoritos de un usuario.
         public async Task<List<Libro>> ListarLibrosFavoritos(int id)
         {
             var listaLibro = from Libro in _context.libros
@@ -142,6 +144,7 @@ namespace AppLibros.Helper_Functions
             return lista;
         }
 
+        //Devuelve una lista de los autores favoritos de un usuario.
         public async Task<List<Autor>> ListarAutoresFavoritos(int id)
         {
             var listaAutor = from Autor in _context.autores
