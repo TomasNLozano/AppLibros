@@ -61,13 +61,14 @@ namespace AppLibros.Helper_Functions
         }
 
         //Remueve todos los libros de un autor.
-       public async void quitarLibros(int autorId)
+       public void quitarLibros(int autorId)
         {
-            var libros = await _context.libros.Where(e => e.autorid == autorId).ToListAsync();
+            var libros = _context.libros.Where(e => e.autorid == autorId).ToList();
             foreach (Libro libro in libros)
             {
                 _context.libros.Remove(libro);
             }
+            _context.SaveChanges();
         }
 
         //Busca un autor por id y devuelve su nombre completo.

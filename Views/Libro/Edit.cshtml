@@ -29,6 +29,22 @@
                         <input asp-for="resena" class="form-control" />
                         <span asp-validation-for="resena" class="text-danger"></span>
                     </div>
+                    @*<div class="form-group" hidden>
+                        <label asp-for="puntaje" class="control-label"></label>
+                        <input asp-for="puntaje" class="form-control" />
+                        <span asp-validation-for="puntaje" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="votos" class="control-label"></label>
+                        <input asp-for="votos" class="form-control" />
+                        <span asp-validation-for="votos" class="text-danger">
+                        </span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="autorid" class="control-label">Autor</label>
+                        @Html.TextBox("autorid", Model.autorid);
+                        <span asp-validation-for="autorid" class="text-danger"></span>
+                    </div>*@
                     <div class="form-group">
                         <input type="submit" value="Guardar" class="btn btn-primary" />
                     </div>
@@ -37,7 +53,7 @@
         </div>
 
         <div>
-            <a asp-action="Index">Volver al indice</a>
+            <a asp-action="Index">Volver al índice</a>
         </div>
 
         @section Scripts {

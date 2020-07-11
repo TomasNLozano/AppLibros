@@ -119,6 +119,7 @@ namespace AppLibros.Controllers
             {
                 return NotFound();
             }
+        
             return View(libro);
         }
 
@@ -127,8 +128,9 @@ namespace AppLibros.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,titulo,isbn,resena,puntaje,votos")] Libro libro)
+        public async Task<IActionResult> Edit(int id, /*[Bind("id,titulo,isbn,resena,puntaje,votos")] Libro libro*/ string titulo, string isbn, string resena)
         {
+            var libro = _context.libros.Find(id);
             if (id != libro.id)
             {
                 return NotFound();
@@ -138,7 +140,10 @@ namespace AppLibros.Controllers
             {
                 try
                 {
-                    _context.Update(libro);
+                    libro.titulo = titulo;
+                    libro.isbn = isbn;
+                    libro.resena = resena;
+                    _context.libros.Update(libro);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

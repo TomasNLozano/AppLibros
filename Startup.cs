@@ -87,6 +87,10 @@ namespace AppLibros
                    name: "buscarAutor",
                    pattern: "{controller=Autor}/{action=buscarAutor}/{testo}"
                    );
+                endpoints.MapControllerRoute(
+                   name: "Edit",
+                   pattern: "{controller=Libro}/{action=Edit}/{id}/{titulo}/{isbn}/{resena}"
+                   );
             });
         }
     }
