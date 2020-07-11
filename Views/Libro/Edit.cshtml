@@ -4,41 +4,43 @@
     ViewData["Title"] = "Edit";
 }
 
-    <h1 id="tituloHome">@Html.DisplayNameFor(model => model.titulo)</h1>
+    <h1 id="tituloHome">@Html.DisplayFor(model => model.titulo)</h1>
 
-<h4>Editar</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="id" />
-            <div class="form-group">
-                <label asp-for="titulo" class="control-label"></label>
-                <input asp-for="titulo" class="form-control" />
-                <span asp-validation-for="titulo" class="text-danger"></span>
+    <div class="vista">
+        <h4>Editar</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="id" />
+                    <div class="form-group">
+                        <label asp-for="titulo" class="control-label"></label>
+                        <input asp-for="titulo" class="form-control" />
+                        <span asp-validation-for="titulo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="isbn" class="control-label"></label>
+                        <input asp-for="isbn" class="form-control" />
+                        <span asp-validation-for="isbn" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="resena" class="control-label"></label>
+                        <input asp-for="resena" class="form-control" />
+                        <span asp-validation-for="resena" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="isbn" class="control-label"></label>
-                <input asp-for="isbn" class="form-control" />
-                <span asp-validation-for="isbn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="resena" class="control-label"></label>
-                <input asp-for="resena" class="form-control" />
-                <span asp-validation-for="resena" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
+        <div>
+            <a asp-action="Index">Volver al indice</a>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Volver al indice</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

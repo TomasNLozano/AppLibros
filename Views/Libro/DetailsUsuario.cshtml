@@ -3,117 +3,118 @@
 @{
     ViewData["Title"] = "Details";
 }
+    <div class="vista">
+        <h1 id="tituloHome">@Html.DisplayFor(model => model.titulo)</h1>
 
-    <h1 id="tituloHome">@Html.DisplayFor(model => model.titulo)</h1>
-
-<div>
-    <h4>Detalles</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.titulo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.titulo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.isbn)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.isbn)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.autorid)
-        </dt>
-        <dd class="col-sm-10">
-            @ViewBag.autor
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.puntaje)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.ViewBag.promedio
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.votos)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.votos)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.resena)
-        </dt>
-        <dd class="col-sm-10">
-            <div class="resenia"> @Html.DisplayFor(model => model.resena) </div>
-</dd>
-    </dl>
-</div>
-<hr />
-<div>
-    @if (ViewBag.puntaje == -1)
-    {
-        @using (Html.BeginForm())
-        {
-            <label for="puntaje">Mi calificacion</label>
-            <input type="range" value="0" max="10" oninput="num.value = this.value" id="puntaje" name="puntaje">
-            <output id="num">0</output>
-            var idLibro = new { id = (int)ViewBag.idLibro };
-            <p hidden>
-                @Html.TextBox("idLibro", idLibro.id)
-            </p>
-            <input type="submit" asp-action="puntuar" value="Calificar" />
-        }
-    }
-    else
-    {
         <div>
-            <h6>Puntaje</h6>
-            <p>
-                @ViewBag.puntaje
-            </p>
+            <h4>Detalles</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.titulo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.titulo)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.isbn)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.isbn)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.autorid)
+                </dt>
+                <dd class="col-sm-10">
+                    @ViewBag.autor
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.puntaje)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.ViewBag.promedio
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.votos)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.votos)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.resena)
+                </dt>
+                <dd class="col-sm-10">
+                    <div class="resenia"> @Html.DisplayFor(model => model.resena) </div>
+                </dd>
+            </dl>
         </div>
-    }
-</div>
-<hr />
-<div>
-    @using (Html.BeginForm())
-    {
+        <hr />
         <div>
-
-            @if (ViewBag.esFav == null)
+            @if (ViewBag.puntaje == -1)
             {
-                var idLibro = new { id = (int)ViewBag.idLibro };
-                <div id="actionAgregar">
+                @using (Html.BeginForm())
+                {
+                    <label for="puntaje">Mi calificacion</label>
+                    <input type="range" value="0" max="10" oninput="num.value = this.value" id="puntaje" name="puntaje">
+                    <output id="num">0</output>
+                    var idLibro = new { id = (int)ViewBag.idLibro };
                     <p hidden>
-                        @Html.TextBox("id", idLibro.id)
+                        @Html.TextBox("idLibro", idLibro.id)
                     </p>
-
-                    <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="boton" />
-
-                </div>
-
+                    <input type="submit" asp-action="puntuar" value="Calificar" />
+                }
             }
             else
             {
-
-                var idLibro = new { id = (int)ViewBag.idLibro };
-                <div id="actionQuitar">
-                    <p hidden>
-                        @Html.TextBox("id", idLibro.id)
+                <div>
+                    <h6>Puntaje</h6>
+                    <p>
+                        @ViewBag.puntaje
                     </p>
+                </div>
+            }
+        </div>
+        <hr />
+        <div>
+            @using (Html.BeginForm())
+            {
+                <div>
 
-                    <input type="submit" asp-action="quitarFavorito" value="Quitar de Favoritos" class="boton" />
+                    @if (ViewBag.esFav == null)
+                    {
+                        var idLibro = new { id = (int)ViewBag.idLibro };
+                        <div id="actionAgregar">
+                            <p hidden>
+                                @Html.TextBox("id", idLibro.id)
+                            </p>
+
+                            <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="boton" />
+
+                        </div>
+
+                    }
+                    else
+                    {
+
+                        var idLibro = new { id = (int)ViewBag.idLibro };
+                        <div id="actionQuitar">
+                            <p hidden>
+                                @Html.TextBox("id", idLibro.id)
+                            </p>
+
+                            <input type="submit" asp-action="quitarFavorito" value="Quitar de Favoritos" class="boton" />
+
+                        </div>
+
+                    }
 
                 </div>
-
             }
 
+
         </div>
-    }
-
-
-</div>
-<hr />
-<div>
-    <a asp-action="Index">Volver al indice</a>
-</div>
+        <hr />
+        <div>
+            <a asp-action="Index">Volver al indice</a>
+        </div>
+    </div>

@@ -3,49 +3,50 @@
 @{
     ViewData["Title"] = "Delete";
 }
+    <div class="vista">
+        <h1 id="tituloHome">Eliminar</h1>
 
-<h1 id="tituloHome">Eliminar</h1>
+        <h3>¿Desea eliminar el registro?</h3>
+        <div>
+            <h4>Libro</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.titulo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.titulo)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.isbn)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.isbn)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.resena)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.resena)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.puntaje)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.puntaje)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.votos)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.votos)
+                </dd>
+            </dl>
 
-<h3>¿Desea eliminar el registro?</h3>
-<div>
-    <h4>Libro</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.titulo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.titulo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.isbn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.isbn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.resena)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.resena)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.puntaje)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.puntaje)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.votos)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.votos)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="id" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver al indice</a>
-    </form>
-</div>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="id" />
+                <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                <a asp-action="Index">Volver al indice</a>
+            </form>
+        </div>
+    </div>

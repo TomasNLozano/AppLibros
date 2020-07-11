@@ -33,6 +33,11 @@ namespace AppLibros.Controllers
         {
             
             HttpContext.Session.SetString("userId", "");
+            if (HttpContext.Session.GetInt32("id").HasValue && HttpContext.Session.GetInt32("id") != 0)
+            {
+                return View("IndexUsuario");
+
+            }
             if (HttpContext.Session.GetString("esAdmin") != "True")
             {
                 if (!HttpContext.Session.GetInt32("id").HasValue) 
@@ -41,7 +46,7 @@ namespace AppLibros.Controllers
                 }
                 
             }
-            return View();
+            return View("Index");
         }
 
         public IActionResult Privacy()
