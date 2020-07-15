@@ -217,7 +217,7 @@ namespace AppLibros.Controllers
             return RedirectToAction("Details", idAutor);
 
         }
-        public IActionResult buscarAutor(string testo)
+        public IActionResult Search(string testo)
         {
             List<Autor> resultado = _helpers.buscarAutores(testo);
 

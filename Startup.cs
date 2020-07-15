@@ -65,7 +65,7 @@ namespace AppLibros
 
                 endpoints.MapControllerRoute(
                     name: "login",
-                    pattern: "{controller=Home}/{action=LogIn}/{id?}/{id2?}"
+                    pattern: "{controller=Home}/{action=LogIn}/{username?}/{password?}"
                     );
                 endpoints.MapControllerRoute(
                     name: "agregarLibroFav",
@@ -84,8 +84,8 @@ namespace AppLibros
                    pattern: "{controller=Libro}/{action=Search}/{testo}"
                    );
                 endpoints.MapControllerRoute(
-                   name: "buscarAutor",
-                   pattern: "{controller=Autor}/{action=buscarAutor}/{testo}"
+                   name: "Search",
+                   pattern: "{controller=Autor}/{action=Search}/{testo}"
                    );
                 endpoints.MapControllerRoute(
                    name: "Edit",

@@ -62,12 +62,12 @@ namespace AppLibros.Controllers
 
         [HttpPost]
         //nunca llega
-        public IActionResult LogIn(String id, String id2)
+        public IActionResult LogIn(string username, string password)
         {
-            Usuario usuario = _context.usuarios.FirstOrDefault(u => (u.username == id && u.password == id2));
+            Usuario usuario = _context.usuarios.FirstOrDefault(u => (u.username == username && u.password == password));
             if (usuario != null)
             {
-                HttpContext.Session.SetString("username", id);
+                HttpContext.Session.SetString("username", username);
                 HttpContext.Session.SetInt32("id", usuario.id);
                 HttpContext.Session.SetString("esAdmin", usuario.esAdmin.ToString());
                 ViewBag.logeo = usuario.id;

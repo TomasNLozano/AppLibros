@@ -22,11 +22,11 @@
                 <h4>Iniciar sesión</h4>
                 <label for="usuario">Nombre de Usuario</label>
                 <p id="usuario">
-                    @Html.TextBox("id")
+                    @Html.TextBox("username")
                 </p>
                 <label for="clave">Contraseña</label>
                 <p id="clave">
-                    @Html.Password("id2")
+                    @Html.Password("password")
                 </p>
                 @if (ViewBag.Error != null)
                 {
