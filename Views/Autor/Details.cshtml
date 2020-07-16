@@ -1,0 +1,84 @@
+﻿@model AppLibros.Models.Autor
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <h1 id="tituloHome">@Html.DisplayFor(model => model.nombre) @Html.DisplayFor(model => model.apellido)</h1>
+    <div class="vista">
+        <div>
+            <h4>Detalles</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.nombre)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.nombre)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.apellido)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.apellido)
+                </dd>
+            </dl>
+            </div>
+            <div>
+                @using (Html.BeginForm())
+                {
+                    <div>
+
+                        @if (ViewBag.esFav == null)
+                        {
+                            var idAutor = new { id = (int)ViewBag.idAutor };
+                            <div id="actionAgregar">
+                                <p hidden>
+                                    @Html.TextBox("id", idAutor.id)
+                                </p>
+
+                                <input type="submit" asp-action="agregarFavorito" value="Agregar a Favoritos" class="boton" />
+
+                            </div>
+
+                        }
+                        else
+                        {
+
+                            var idAutor = new { id = (int)ViewBag.idAutor };
+                            <div id="actionQuitar">
+                                <p hidden>
+                                    @Html.TextBox("id", idAutor.id)
+                                </p>
+
+                                <input type="submit" asp-action="quitarFavorito" value="Quitar de Favoritos" class="boton" />
+
+                            </div>
+
+                        }
+
+                    </div>
+                }
+
+
+            </div>
+            <hr>
+            <div class="librosDeAutor">
+                @Html.DisplayNameFor(model => model.libros)
+                <br />
+                @foreach (var item in Model.libros)
+                {
+
+                    var idLibro = new { id = item.id };
+                    @Html.ActionLink(item.titulo, "Details", "Libro", idLibro)
+
+                    <br />
+
+                }
+            </div>
+            <hr>
+            <div>
+                <a asp-action="Edit" asp-route-id="@Model.id">Editar</a> |
+                <a asp-action="Index">Volver al índice</a>
+            </div>
+        </div>

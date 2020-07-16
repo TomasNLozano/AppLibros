@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 id="tituloHome" class="display-4">Bienvenido</h1>
+        <hr />
+
+        <div class="video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/g34jNTicuHQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="login">
+            <p>
+                Stephen King lee un fragmento de su nuevo libro. ¡La reseña ya está disponible!
+                </p>
+                </div>
+        <hr>
+        @using (Html.BeginForm())
+        {
+
+            <div class="login">
+                <h4>Iniciar sesión</h4>
+                <label for="usuario">Nombre de Usuario</label>
+                <p id="usuario">
+                    @Html.TextBox("username")
+                </p>
+                <label for="clave">Contraseña</label>
+                <p id="clave">
+                    @Html.Password("password")
+                </p>
+                @if (ViewBag.Error != null)
+                {
+                    <p style="color:red;">
+                        @Html.ViewBag.Error
+                    </p>
+                }
+
+                <input id="botonHome" type="submit" asp-action="LogIn" value="Ingresar" class="boton" />
+            </div>
+            <hr />
+        }
+        <div class="login">
+            <h4>Registrarse</h4>
+            <div>
+                @using (Html.BeginForm())
+                {
+                    <input class="boton" type="submit" asp-action="Create" value="Crear Usuario" asp-controller="Usuario" />
+                }
+
+            </div>
+        </div>
+
+    </div>

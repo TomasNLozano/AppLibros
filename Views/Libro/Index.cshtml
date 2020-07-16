@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AppLibros.Models.Libro>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <div class="vista">
+        <h1 id="tituloHome">Libros</h1>
+
+        @using (Html.BeginForm())
+        {
+            <div>
+                <label for="busqueda1">Buscar por título</label>
+                <p id="busqueda1">
+                    @Html.TextBox("testo")
+                </p>
+                <input type="submit" asp-action="Search" value="Buscar" />
+            </div>
+        }
+        <p>
+            <a asp-action="Create">Nuevo Libro</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.titulo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.isbn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.votos)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.titulo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.isbn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.votos)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.id">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.id">Detalles</a> |
+                            <a asp-action="Delete" asp-route-id="@item.id">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

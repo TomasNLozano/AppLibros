@@ -1,0 +1,51 @@
+﻿@model AppLibros.Models.Libro
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <div class="vista">
+        <h1 id="tituloHome">Nuevo Libro</h1>
+
+        <h4>Completar los campos</h4>
+        <hr />
+
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="titulo" class="control-label"></label>
+                        <input asp-for="titulo" class="form-control" />
+                        <span asp-validation-for="titulo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="isbn" class="control-label"></label>
+                        <input asp-for="isbn" class="form-control" />
+                        <span asp-validation-for="isbn" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="autorid" class="control-label">Autor</label>
+                        @Html.DropDownList("autorid", new SelectList((List<Autor>)ViewBag.listaAutores, "id", "apellido"), "Autor")
+                        <span asp-validation-for="autorid" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="resena" class="control-label"></label>
+                        <input asp-for="resena" class="form-control" />
+                        <span asp-validation-for="resena" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Volver al índice</a>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
+    </div>

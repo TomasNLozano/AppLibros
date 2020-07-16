@@ -1,0 +1,52 @@
+﻿body {
+    background-image: url(../recursos/wallpaperflare.com_wallpaper.jpg) ;
+}
+#barraNav {
+    background: rgba(0, 0, 0, 0.69);
+    color: #eae3e3;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    
+}
+#tituloHome {
+    font-family: 'Alegreya Sans SC', sans-serif;
+}
+.boton {
+    width: 200px;
+    margin: auto;
+    font-weight: 700;
+}
+.login {
+    color: black;
+    display:inline-block;
+    font-family: 'Balsamiq Sans', cursive;
+}
+.vista {
+    font-family: 'Balsamiq Sans', cursive;
+}
+.piePagina {
+    font-family: 'Alegreya Sans SC', sans-serif;
+}
+
+.favoritos {
+    display: inline-block;
+    max-height: 200px;
+    margin: 5px 20px 5px 50px;
+    vertical-align: top;
+    overflow: auto;
+}
+
+.resenia {
+    overflow: auto;
+    max-height: 75px;
+    font-family: 'Special Elite', cursive;
+}
+
+.librosDeAutor {
+    overflow: auto ;
+    max-height: 200px;
+}
+
+.video {
+    text-align: center;
+    display: inline-block;
+}
